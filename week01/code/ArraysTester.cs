@@ -1,3 +1,5 @@
+using System.Runtime.ExceptionServices;
+
 public static class ArraysTester {
     /// <summary>
     /// Entry point for the tests
@@ -34,12 +36,19 @@ public static class ArraysTester {
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     private static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // Create an array to store the multiples
+        double [] multiples = new double[length];
 
-        return new double[0]; // replace this return statement with your own
+        // Create a loop to calculate multiples according to the length provided
+        for (int i = 0; i < length; i++)
+        {   
+            // Calculate the multiple of the number for i+1 as i starts at 0.
+            double multiple = number * (i+1);
+            // Store the calculated multiple in index i of the array.
+            multiples[i] = multiple;
+        }
+        // Return the array of multiples.
+        return multiples;
     }
     
     /// <summary>
@@ -52,10 +61,13 @@ public static class ArraysTester {
     /// </summary>
     private static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
-
+        // Calculate the number of elements that will get moved to the right of the list
+        int range = data.Count - amount;
+        // Create a temporary list containing the elements that will get moved to the right of the list
+        List<int> temporaryList = data.GetRange(0, range);
+        // Remove the elements that will get moved to the right of the list
+        data.RemoveRange(0, range);
+        // Finally add the elements back to the list, effectively rotating them to the right
+        data.AddRange(temporaryList);
     }
 }
