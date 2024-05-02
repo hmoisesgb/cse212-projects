@@ -11,20 +11,35 @@ public class CustomerService {
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: One Customer Service Queue will be created with the value of 0.
+        // Expected Result: The maxsize property should equal to 10, if it does the console will print True
         Console.WriteLine("Test 1");
-
-        // Defect(s) Found: 
+        var customerServiceQueue = new CustomerService(0);
+        if (customerServiceQueue._maxSize == 10){
+            Console.WriteLine("True");
+        }
+        else{
+            Console.WriteLine("False");
+        }
+        // Defect(s) Found: None, this works!
 
         Console.WriteLine("=================");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: If we create a Queue of 3 max customers, and we attempt to add a 4 one, will it show the error message?
+        // Expected Result: The message "Maximum Number of Customers in Queue." should be printed to the console on the 4th one
         Console.WriteLine("Test 2");
 
-        // Defect(s) Found: 
+        int maxSize = 3;
+
+        customerServiceQueue = new CustomerService(maxSize);
+
+        for (int i = 0; i <= maxSize; i++)
+        {
+            customerServiceQueue.AddNewCustomer();
+        }
+
+        // Defect(s) Found: The condition was checking if _queue.Count was greater than the maxsize. We corrected it to greater or equal to the maxsize.
 
         Console.WriteLine("=================");
 
@@ -67,7 +82,7 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
