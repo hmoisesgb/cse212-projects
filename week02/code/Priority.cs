@@ -54,7 +54,7 @@
         Console.WriteLine("Test 3");
         Console.WriteLine(priorityQueue.Dequeue());
 
-        // Defect(s) Found: 
+        // Defect(s) Found: No defects found
 
         Console.WriteLine("---------");
     }
