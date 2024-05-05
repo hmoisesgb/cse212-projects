@@ -34,11 +34,13 @@ public class TakingTurnsQueue {
             Console.WriteLine("No one in the queue.");
         else {
             Person person = _people.Dequeue();
-            if (person.Turns > 1) {
+            if (person.Turns <= 0){ // Defect #2 There was no condition that checked if the turns were infinite
+                _people.Enqueue(person);
+            }
+            else if (person.Turns > 1) {
                 person.Turns -= 1;
                 _people.Enqueue(person);
             }
-
             Console.WriteLine(person.Name);
         }
     }
