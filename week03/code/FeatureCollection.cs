@@ -1,4 +1,17 @@
+using Microsoft.VisualBasic;
+
 public class FeatureCollection {
-    // Todo Earthquake Problem - ADD YOUR CODE HERE
-    // Create additional classes as necessary
+
+    public string type { get; set; }
+    public Feature[] features { get; set; }
+}
+
+public class Feature{
+    public string type { get; set; }
+    public Properties properties{ get; set; }
+}
+
+public class Properties{
+    public decimal mag { get; set; }
+    public string place { get; set; }
 }

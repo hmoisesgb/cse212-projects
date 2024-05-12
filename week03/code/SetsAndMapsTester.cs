@@ -108,9 +108,25 @@ public static class SetsAndMapsTester {
     /// </summary>
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     private static void DisplayPairs(string[] words) {
-        // To display the pair correctly use something like:
-        // Console.WriteLine($"{word} & {pair}");
-        // Each pair of words should displayed on its own line.
+
+        //Create a set to save the words
+        var wordSet = new HashSet<string>();
+
+        //Iterate through all the words in the array
+        foreach (var word in words)
+        {
+            //Reverse the word and save it into the variable pair
+            var reverseWord = word.ToCharArray();
+            Array.Reverse(reverseWord);
+            var pair = new string (reverseWord);
+
+            //Check if the set contains the reverse word and if it does not have the same 2 letters
+            if (wordSet.Contains(pair) && word != pair)
+                Console.WriteLine($"{word} & {pair}");
+            
+            //If the word is not in the set, add it to the set
+            wordSet.Add(word);    
+        }
     }
 
     /// <summary>
@@ -132,6 +148,15 @@ public static class SetsAndMapsTester {
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
             // Todo Problem 2 - ADD YOUR CODE HERE
+            var key = fields[3];
+            if (degrees.ContainsKey(key))
+            {
+                degrees[key] += 1;
+            }
+            else
+            {
+                degrees[key] = 1;
+            }
         }
 
         return degrees;
@@ -158,7 +183,61 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+        //Creating 2 dictionaries to keep the letter count of each word
+        var letterCount1 = new Dictionary<char, int>();
+        var letterCount2 = new Dictionary<char, int>();
+
+        //Changing all letters to lowercase, and removing spaces
+        word1 = word1.Replace(" ", "").ToLower();
+        word2 = word2.Replace(" ", "").ToLower();
+
+
+        foreach (var letter in word1)
+        {
+            if(letterCount1.ContainsKey(letter))
+               letterCount1[letter] += 1;
+            else
+                letterCount1[letter] = 1;
+        }
+
+        foreach (var letter in word2)
+        {
+            if(letterCount2.ContainsKey(letter))
+               letterCount2[letter] += 1;
+            else
+                letterCount2[letter] = 1;
+        }
+
+        //Checking if both dictionaries have the same number of items
+        //if not return false
+        if(letterCount1.Count !=letterCount2.Count)
+            return false;
+
+        //If both dictionaries have the same number of items
+        //check every key value pair of each dictionary to see
+        //if they match. If any value does not match return false
+
+        foreach (var keyValuePair in letterCount1)
+        {   
+            //Get the key to compare both dictionaries
+            var letter = keyValuePair.Key;
+
+            //Check if the second dictionary contains the letter. If it does
+            //it checks if the letter count is the same. If the letter count
+            //is not the same or the key is not in the other dictionary returns false
+            if(letterCount2.ContainsKey(letter))
+            {
+                if(letterCount2[letter] != keyValuePair.Value)
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //If all conditions pass, returns true.
+        return true;
     }
 
     /// <summary>
@@ -230,6 +309,10 @@ public static class SetsAndMapsTester {
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
+
+        foreach (var feature in featureCollection.features) {
+            Console.WriteLine($"{feature.properties.place} - {feature.properties.mag}");
+        }
 
         // TODO:
         // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
